@@ -1,10 +1,13 @@
-cflags = -mcpu=cortex-m3 -Wall -Wextra -ffreestanding -g -I lib/libc/include
+cflags = -mcpu=cortex-m3 -Wall -Wextra -ffreestanding -ffunction-sections -fdata-sections -g
+inc = -I lib/libc/include -I external/lwip/include
 
 rule cc
-  command = arm-none-eabi-gcc $cflags -c $in -o $out
+  command = arm-none-eabi-gcc $cflags $inc -MD -MQ $out -MF $out.d -c $in -o $out
+  depfile = $out.d
+  deps = gcc
 
 rule ld
-  command = arm-none-eabi-ld -Map=build/$out.map -T src/lm3s6965.ld $in -o $out
+  command = arm-none-eabi-ld -Map=build/$out.map -T src/lm3s6965.ld --no-undefined --gc-sections $in -o $out
 
 rule ldr
   command = arm-none-eabi-ld -r $in -o $out

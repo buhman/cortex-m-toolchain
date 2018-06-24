@@ -1,9 +1,6 @@
 s = external/lwip
 b = build/lwip
 
-rule cc
-  command = arm-none-eabi-gcc $cflags -I $s/include -c $in -o $out
-
 # core
 build $b/core/init.o: cc $s/core/init.c
 build $b/core/def.o: cc $s/core/def.c
