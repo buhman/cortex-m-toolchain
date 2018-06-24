@@ -1,6 +1,6 @@
 wflags = -Wall -Wextra -Werror -Wwrite-strings
 cflags = -mcpu=cortex-m3 -ffreestanding -ffunction-sections -fdata-sections -g -fdiagnostics-color=always
-inc = -I lib/libc/include -I external/lwip/include
+inc = -I lib/libc/include -I external/lwip/include -I external/cmsis/core/include
 
 rule cc
   command = arm-none-eabi-gcc $wflags $cflags $inc -MD -MQ $out -MF $out.d -c $in -o $out
