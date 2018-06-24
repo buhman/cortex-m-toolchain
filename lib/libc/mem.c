@@ -6,7 +6,7 @@ memcpy (void *dst0,
 	size_t length)
 {
   char *dst = (char *) dst0;
-  const char *src = (char *) src0;
+  const char *src = (const char *) src0;
 
   while (length--)
     {
