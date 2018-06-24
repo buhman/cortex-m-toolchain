@@ -14,3 +14,17 @@ This currently depends on:
 
 .. _gcc-arm-none-eabi: https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
 .. _ninja: https://ninja-build.org/
+
+building:
+
+.. code-block:: sh-session
+
+  $ ninja
+
+to run in qemu + debug (using the provided `.gdbinit`):
+
+.. code-block:: sh-session
+
+  $ ./qemu.sh
+  ..
+  $ arm-none-eabi-gdb
