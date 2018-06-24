@@ -1,0 +1,13 @@
+s = lib/libc
+b = build/libc
+
+# stdlib
+build $b/mem.o: cc $s/mem.c
+build $b/str.o: cc $s/str.c
+build $b/atoi.o: cc $s/atoi.c
+
+# sys
+build $b/sys.o: cc $s/sys.c
+
+# combine
+build build/libc.o: ldr $b/mem.o $b/str.o $b/atoi.o $b/sys.o

@@ -1,4 +1,4 @@
-cflags = -mcpu=cortex-m3 -Wall -Wextra -ffreestanding -g
+cflags = -mcpu=cortex-m3 -Wall -Wextra -ffreestanding -g -I lib/libc/include
 
 rule cc
   command = arm-none-eabi-gcc $cflags -c $in -o $out
@@ -6,15 +6,23 @@ rule cc
 rule ld
   command = arm-none-eabi-ld -Map=build/$out.map -T src/lm3s6965.ld $in -o $out
 
+rule ldr
+  command = arm-none-eabi-ld -r $in -o $out
+
 rule obj
   command = arm-none-eabi-objcopy -O binary $in $out
 
+# subninja
+subninja external/lwip/lwip.ninja
+subninja lib/libc/libc.ninja
+
+# main build
 build build/main.o: cc src/main.c
 build build/start.o: cc src/start.c
 build build/vector_table.o: cc src/vector_table.c
 
 # elf binary
-build kernel.elf: ld build/main.o build/start.o build/vector_table.o
+build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/lwip.o build/libc.o
 
 # raw binary
 build kernel.bin: obj kernel.elf

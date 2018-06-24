@@ -1,0 +1,49 @@
+s = external/lwip
+b = build/lwip
+
+rule cc
+  command = arm-none-eabi-gcc $cflags -I $s/include -c $in -o $out
+
+# core
+build $b/core/init.o: cc $s/core/init.c
+build $b/core/def.o: cc $s/core/def.c
+build $b/core/dns.o: cc $s/core/dns.c
+build $b/core/inet_chksum.o: cc $s/core/inet_chksum.c
+build $b/core/ip.o: cc $s/core/ip.c
+build $b/core/mem.o: cc $s/core/mem.c
+build $b/core/memp.o: cc $s/core/memp.c
+build $b/core/netif.o: cc $s/core/netif.c
+build $b/core/pbuf.o: cc $s/core/pbuf.c
+build $b/core/raw.o: cc $s/core/raw.c
+build $b/core/stats.o: cc $s/core/stats.c
+build $b/core/sys.o: cc $s/core/sys.c
+build $b/core/altcp.o: cc $s/core/altcp.c
+build $b/core/altcp_alloc.o: cc $s/core/altcp_alloc.c
+build $b/core/altcp_tcp.o: cc $s/core/altcp_tcp.c
+build $b/core/tcp.o: cc $s/core/tcp.c
+build $b/core/tcp_in.o: cc $s/core/tcp_in.c
+build $b/core/tcp_out.o: cc $s/core/tcp_out.c
+build $b/core/timeouts.o: cc $s/core/timeouts.c
+build $b/core/udp.o: cc $s/core/udp.c
+
+build $b/core.o: ldr $b/core/init.o $b/core/def.o $b/core/dns.o $b/core/inet_chksum.o $b/core/ip.o $b/core/mem.o $b/core/memp.o $b/core/netif.o $b/core/pbuf.o $b/core/raw.o $b/core/stats.o $b/core/sys.o $b/core/altcp.o $b/core/altcp_alloc.o $b/core/altcp_tcp.o $b/core/tcp.o $b/core/tcp_in.o $b/core/tcp_out.o $b/core/timeouts.o $b/core/udp.o
+
+# core/ipv4
+build $b/core/ipv4/autoip.o: cc $s/core/ipv4/autoip.c
+build $b/core/ipv4/dhcp.o: cc $s/core/ipv4/dhcp.c
+build $b/core/ipv4/etharp.o: cc $s/core/ipv4/etharp.c
+build $b/core/ipv4/icmp.o: cc $s/core/ipv4/icmp.c
+build $b/core/ipv4/igmp.o: cc $s/core/ipv4/igmp.c
+build $b/core/ipv4/ip4_frag.o: cc $s/core/ipv4/ip4_frag.c
+build $b/core/ipv4/ip4.o: cc $s/core/ipv4/ip4.c
+build $b/core/ipv4/ip4_addr.o: cc $s/core/ipv4/ip4_addr.c
+
+build $b/core_ipv4.o: ldr $b/core/ipv4/autoip.o $b/core/ipv4/dhcp.o $b/core/ipv4/etharp.o $b/core/ipv4/icmp.o $b/core/ipv4/igmp.o $b/core/ipv4/ip4_frag.o $b/core/ipv4/ip4.o $b/core/ipv4/ip4_addr.o
+
+# netif
+build $b/netif/ethernet.o: cc $s/netif/ethernet.c
+
+build $b/netif.o: ldr $b/netif/ethernet.o
+
+# combine
+build build/lwip.o: ldr $b/core.o $b/core_ipv4.o $b/netif.o
