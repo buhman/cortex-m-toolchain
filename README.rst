@@ -9,10 +9,10 @@ usage
 
 This currently depends on:
 
-- gcc-arm-none-eabi_
+- arm-none-eabi_
 - ninja_
 
-.. _gcc-arm-none-eabi: https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
+.. _arm-none-eabi: https://github.com/FreddieChopin/bleeding-edge-toolchain/releases/tag/180502
 .. _ninja: https://ninja-build.org/
 
 building:
