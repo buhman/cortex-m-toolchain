@@ -45,3 +45,9 @@ flash bank $FLASHNAME.a lpc2000 0x1A000000 0x80000 0 0 $CHIPNAME.m4 \
 
 flash bank $FLASHNAME.b lpc2000 0x1B000000 0x80000 0 0 $CHIPNAME.m4 \
     lpc4300 204000 calc_checksum
+
+proc write_erase_bank {bank filename} {
+    halt
+    flash erase_sector $bank 0 last
+    flash write_bank $bank $filename 0x0
+}
