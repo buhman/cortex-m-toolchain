@@ -1,5 +1,5 @@
 wflags = -Wall -Wextra -Werror -Wwrite-strings
-cflags = -mcpu=cortex-m3 -ffreestanding -ffunction-sections -fdata-sections -g -fdiagnostics-color=always
+cflags = -mcpu=cortex-m4 -ffreestanding -ffunction-sections -fdata-sections -g -fdiagnostics-color=always
 inc = -I lib/libc/include -I external/lwip/include -I external/cmsis/core/include
 
 rule cc
@@ -8,7 +8,7 @@ rule cc
   deps = gcc
 
 rule ld
-  command = arm-none-eabi-ld -Map=build/$out.map -T src/lm3s6965.ld --no-undefined --gc-sections $in -o $out
+  command = arm-none-eabi-ld -Map=build/$out.map -T src/lpc4367.ld --no-undefined --gc-sections $in -o $out
 
 rule ldr
   command = arm-none-eabi-ld -r $in -o $out
@@ -31,4 +31,6 @@ build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/lwip.
 # raw binary
 build kernel.bin: obj kernel.elf
 
-default kernel.elf
+build all: phony kernel.bin kernel.elf
+
+default all
