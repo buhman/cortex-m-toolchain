@@ -15,6 +15,9 @@ This currently depends on:
 .. _arm-none-eabi: https://github.com/FreddieChopin/bleeding-edge-toolchain/releases/tag/180502
 .. _ninja: https://ninja-build.org/
 
+    If you're using Arch Linux, you can also install `arm-none-eabi-*` from
+    `community` (same version as bleeding-edge-toolchain).
+
 building:
 
 .. code-block:: sh-session
@@ -29,15 +32,28 @@ to run in qemu + debug (using the provided `.gdbinit`):
   ..
   $ arm-none-eabi-gdb -q -ix ./qemu.gdbinit
 
-real hardware
-^^^^^^^^^^^^^
+example hardware
+^^^^^^^^^^^^^^^^
 
-I test on a lpc4367/lpcxpresso4367; none of this is likely to work
-unmodified on anything else.
+The following boards are being used/tested with this repository:
 
-I chose openocd_, somewhat arbitrarily; likely-viable alternatives
-exist, but I've found no issues with openocd itself yet. The first
-thing you'll need to do is start the daemon:
+- lpcxpresso4367 (lpc4367)
+- lpcxpresso18s37 (lpc18s37)
+
+.. _lpcxpresso18s37: https://www.nxp.com/part/OM13076
+.. _lpcxpresso4367: https://www.nxp.com/part/OM13088
+
+These development boards require bootstrapping from DFU out of the box; this
+process is documented in `lpcx bootstrappping`_.
+
+.. _lpcx bootstrapping: doc/lpcx-bootstrapping.rst
+
+on-chip debugging
+^^^^^^^^^^^^^^^^^
+
+I chose openocd_, somewhat arbitrarily; other likely-viable alternatives exist,
+but I've found no issues with openocd itself. The first thing you'll need to do
+is start the daemon:
 
 .. code-block:: sh-session
 
@@ -51,6 +67,8 @@ Write code to bank 0 and execute:
   > halt
   > flash write_bank 0 kernel.bin 0x0
   > reset run
+
+.. _openocd: http://openocd.org
 
 debugging
 ^^^^^^^^^
@@ -66,14 +84,15 @@ Here's an example of breaking at `main()`:
   (gdb) break main
   (gdb) continue
 
+I also suggest trying gdb-dashboard_.
+
+.. gdb-dashboard:: https://github.com/cyrus-and/gdb-dashboard
+
 other
 ^^^^^
-  
+
 Clear flash bank 0:
 
 .. code_block:: sh-session
-  
-  > flash erase_sector 0 0 last
 
-.. _openocd: http://openocd.org
-.. _lpc4367: https://www.nxp.com/products/processors-and-microcontrollers/arm-based-processors-and-mcus/lpc-cortex-m-mcus/lpc4300-cortex-m4-m0/high-performance-32-bit-microcontroller-based-on-arm-cortex-m4-m0:LPC4367JET100
+  > flash erase_sector 0 0 last
