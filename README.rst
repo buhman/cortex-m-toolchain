@@ -37,16 +37,16 @@ example hardware
 
 The following boards are being used/tested with this repository:
 
-- lpcxpresso4367 (lpc4367)
-- lpcxpresso18s37 (lpc18s37)
+- lpcxpresso4367_ (lpc4367)
+- lpcxpresso18s37_ (lpc18s37)
 
 .. _lpcxpresso18s37: https://www.nxp.com/part/OM13076
 .. _lpcxpresso4367: https://www.nxp.com/part/OM13088
 
 These development boards require bootstrapping from DFU out of the box; this
-process is documented in `lpcx bootstrappping`_.
+process is documented in bootstrappping_.
 
-.. _lpcx bootstrapping: doc/lpcx-bootstrapping.rst
+.. _bootstrapping: doc/lpcx-bootstrapping.rst
 
 on-chip debugging
 ^^^^^^^^^^^^^^^^^
