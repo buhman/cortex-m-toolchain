@@ -8,7 +8,7 @@ rule cc
   deps = gcc
 
 rule ld
-  command = arm-none-eabi-ld -Map=build/$out.map -T src/lpc4367.ld --no-undefined --gc-sections $in -o $out
+  command = arm-none-eabi-ld -Map=build/$out.map -T src/lpc4367.ld --no-undefined $in -o $out
 
 rule ldr
   command = arm-none-eabi-ld -r $in -o $out
@@ -26,7 +26,9 @@ build build/start.o: cc src/start.c
 build build/vector_table.o: cc src/vector_table.c
 
 # elf binary
-build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/lwip.o build/libc.o
+build kernel.elf: ld build/main.o build/start.o build/vector_table.o
+
+#build/lwip.o build/libc.o
 
 # raw binary
 build kernel.bin: obj kernel.elf

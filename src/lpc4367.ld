@@ -27,7 +27,7 @@ SECTIONS
   /* read-only data */
   .rodata : ALIGN(4)
   {
-    *(.rodata*)
+    *(.rodata .rodata.*)
   } > FLASH
 
   __data_start_rom = .;
@@ -36,7 +36,7 @@ SECTIONS
   .data : ALIGN(4)
   {
     __data_start = .;
-    *(.data)
+    *(.data .data.*)
     __data_end = .;
   } > RAM
 
