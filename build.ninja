@@ -1,6 +1,6 @@
 wflags = -Wall -Wextra -Werror -Wwrite-strings
 cflags = -mcpu=cortex-m4 -ffreestanding -ffunction-sections -fdata-sections -g -fdiagnostics-color=always
-inc = -I lib/libc/include -I external/lwip/include -I external/cmsis/core/include
+inc = -I lib/libc/include -I external/lwip/include -I external/cmsis/core/include -I include
 
 rule cc
   command = arm-none-eabi-gcc $wflags $cflags $inc -MD -MQ $out -MF $out.d -c $in -o $out
@@ -24,9 +24,10 @@ subninja lib/libc/libc.ninja
 build build/main.o: cc src/main.c
 build build/start.o: cc src/start.c
 build build/vector_table.o: cc src/vector_table.c
+build build/cgu.o: cc src/cgu.c
 
 # elf binary
-build kernel.elf: ld build/main.o build/start.o build/vector_table.o
+build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/cgu.o
 
 #build/lwip.o build/libc.o
 
