@@ -180,6 +180,6 @@ typedef struct ccu2 {
 
 /* register memory mapping */
 #define CCU1_BASE 0x40051000
-#define CCU1 ((struct ccu1 *) CCU1_BASE)
+#define CCU1 ((struct ccu1 *const) CCU1_BASE)
 #define CCU2_BASE 0x40052000
-#define CCU2 ((struct ccu2 *) CCU2_BASE)
+#define CCU2 ((struct ccu2 *const) CCU2_BASE)

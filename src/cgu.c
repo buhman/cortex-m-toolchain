@@ -29,14 +29,11 @@
   110 00010000 00 00 0 0 00 0 0000000
 */
 
-#include "cgu.h"
-
-#define CLK_SEL(v) ((v & 0x1f) << 24)
+#include "registers/cgu.h"
+#include "bits/cgu.h"
 
 #define RCNT (0x1ff)
 #define IRC_CLK (12000000U)
-#define MEAS (1 << 23)
-#define FCNT ((CGU->FREQ_MON >> 9) & 0x3ff)
 
 uint32_t
 cgu_measure_frequency(enum clk_sel clk)
@@ -55,9 +52,6 @@ cgu_measure_frequency(enum clk_sel clk)
   return FCNT * (IRC_CLK / RCNT);
 }
 
-#define ENABLE (1 << 0)
-#define BYPASS (1 << 1)
-
 static inline void
 _enable_crystal(void)
 {
@@ -74,26 +68,13 @@ _enable_crystal(void)
   }
 }
 
-#define PD (1 << 0)
-#define AUTOBLOCK (1 << 11)
-#define IRC (CLK_SEL_IRC)
-#define XTAL_OSC (CLK_SEL_XTAL_OSC)
-#define PLL1 (CLK_SEL_PLL1)
-
-#define PSEL(p) ((p & 0x3) << 8)
-#define NSEL(n) ((n & 0x3) << 12)
-#define MSEL(m) ((m & 0xff) << 16)
-#define LOCK (1 << 0)
-#define DIRECT (1 << 7)
-#define AUTOBLOCK (1 << 11)
-
 void
 cgu_core_init(void)
 {
   volatile uint32_t delay;
 
   /* set M4 core clock to IRC */
-  CGU->BASE_CTRL[CLK_BASE_M4] = CLK_SEL(IRC);
+  CGU->BASE_CTRL[CLK_BASE_M4] = CLK_SEL(CLK_SEL_IRC);
 
   _enable_crystal();
 
@@ -118,7 +99,7 @@ cgu_core_init(void)
   CGU->PLL1_CTRL |= PSEL(0) | AUTOBLOCK;
 
   /* set M4 core clock to PLL1 */
-  CGU->BASE_CTRL[CLK_BASE_M4] = CLK_SEL(PLL1);
+  CGU->BASE_CTRL[CLK_BASE_M4] = CLK_SEL(CLK_SEL_PLL1);
 
   delay = 1700;
   while (delay--) {

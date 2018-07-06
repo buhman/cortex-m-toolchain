@@ -131,4 +131,4 @@ enum clk_sel {
 };
 
 #define CGU_BASE 0x40050000
-#define CGU ((struct cgu *) CGU_BASE)
+#define CGU ((struct cgu *const) CGU_BASE)
