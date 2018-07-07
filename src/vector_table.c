@@ -1,57 +1,41 @@
 #include <stdint.h>
 
+#define __SECTION(v) __attribute__ ((section(v)))
+
 typedef void (* vec_t)(void);
 
 /* linker symbols */
-extern uint32_t __stack_top;
+extern void __stack_top();
+extern void __vector_checksum();
 
 /* forward declarations */
 extern void _start(void);
-void default_handler(void);
-void systick_handler(void);
+extern void _nmi(void);
+extern void _hardfault(void);
+extern void _memmanage(void);
+extern void _busfault(void);
+extern void _usagefault(void);
+extern void _svc(void);
+extern void _debugmonitor(void);
+extern void _pendsv(void);
+extern void _systick(void);
 
 /* cortex-m/lpc interrupt handlers */
-const vec_t __vectors[] __attribute__ ((section(".vectors"))) = {
-  /* stack pointer */
-  (vec_t)(&__stack_top),
-  /* reset vector */
+const vec_t __vectors[] __SECTION(".vectors.core") = {
+  &__stack_top,
   _start,
-  /* NMI */
+  _nmi,
+  _hardfault,
+  _memmanage,
+  _busfault,
+  _usagefault,
+  __vector_checksum,
   0,
-  /* hard fault */
   0,
-  /* MPU fault */
   0,
-  /* bus fault */
+  _svc,
+  _debugmonitor,
   0,
-  /* usage fault */
-  0,
-  /* reserved */
-  0,
-  /* reserved */
-  0,
-  /* reserved */
-  0,
-  /* reserved */
-  0,
-  /* svcall */
-  0,
-  /* debug monitor */
-  0,
-  /* reserved */
-  0,
-  /* pendsv */
-  0,
-  /* systick */
-  systick_handler
+  _pendsv,
+  _systick
 };
-
-void default_handler(void)
-{
-  while (1);
-}
-
-void systick_handler(void)
-{
-  return;
-}

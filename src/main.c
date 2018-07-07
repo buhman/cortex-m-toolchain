@@ -57,8 +57,13 @@ void main(void)
   while (1) {
     __WFI();
 
-    *GPIO_NOT0 = (1 << 7);
+    *GPIO_NOT3 = (1 << 7);
 
     UART0->THR = 'g';
   }
+}
+
+void _systick(void)
+{
+  return;
 }

@@ -17,7 +17,8 @@ SECTIONS
   .text : ALIGN(4)
   {
     /* vector table starts at VMA 0x0 */
-    KEEP(*(.vectors))
+    KEEP(*(.vectors.core))
+    KEEP(*(.vectors.chip))
 
     . = ALIGN(4);
 
@@ -50,4 +51,15 @@ SECTIONS
 
   /* stack */
   __stack_top = ORIGIN(RAM) + LENGTH(RAM);
+
+  /* lpc-specific checksum user-code validation */
+  __vector_checksum = 0 -
+    (__stack_top
+      + (_start + 1)
+      + (_nmi + 1)
+      + (_hardfault + 1)
+      + (_memmanage + 1)
+      + (_busfault + 1)
+      + (_usagefault + 1)
+    );
 }
