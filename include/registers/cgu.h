@@ -94,7 +94,7 @@ struct cgu_pll {
 
 /* CGU */
 struct cgu {
-  volatile const uint32_t RESERVED0[5];
+  volatile const uint32_t _pad_a[5];
   /* Frequency monitor register */
   volatile uint32_t FREQ_MON;
   /* Crystal oscillator control register */

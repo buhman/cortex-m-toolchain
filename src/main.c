@@ -1,6 +1,12 @@
 #include <stdint.h>
 #include <cmsis_gcc.h>
 
+#include "uart.h"
+#include "cgu.h"
+#include "scu.h"
+
+#include "board/lpcx_v3.h"
+
 /* DUI0552A: page 159 */
 volatile uint32_t * const SYST_CSR = (uint32_t *)0xE000E010;
 volatile uint32_t * const SYST_RVR = (uint32_t *)0xE000E014;
@@ -19,6 +25,8 @@ volatile uint32_t * const GPIO_NOT3 = (uint32_t *)(GPIO_BASE + 0x230C);
 #define CLKSOURCE (1 << 2)
 #define TICKINT (1 << 1)
 #define ENABLE (1 << 0)
+
+#define LEN(a) (sizeof (a) / sizeof (struct pin_cfg))
 
 void main(void)
 {
@@ -40,11 +48,17 @@ void main(void)
   /* trigger ISR once every tick_rvr cycles */
   *SYST_RVR = 0x00FFFFFF;
 
+  cgu_core_init();
+  scu_board_init(lpcx_v3_board, LEN(lpcx_v3_board));
+  uart_generic_init(UART0);
+
   __enable_irq();
 
   while (1) {
+    __WFI();
+
     *GPIO_NOT0 = (1 << 7);
 
-    __WFI();
+    UART0->THR = 'g';
   }
 }

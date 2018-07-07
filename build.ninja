@@ -26,9 +26,10 @@ build build/start.o: cc src/start.c
 build build/vector_table.o: cc src/vector_table.c
 build build/cgu.o: cc src/cgu.c
 build build/uart.o: cc src/uart.c
+build build/scu.o: cc src/scu.c
 
 # elf binary
-build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/cgu.o build/uart.o
+build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/cgu.o build/uart.o build/scu.o
 
 #build/lwip.o build/libc.o
 
