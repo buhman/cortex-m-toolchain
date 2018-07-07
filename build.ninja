@@ -28,9 +28,10 @@ build build/exceptions.o: cc src/exceptions.c
 build build/cgu.o: cc src/cgu.c
 build build/uart.o: cc src/uart.c
 build build/scu.o: cc src/scu.c
+build build/gpio.o: cc src/gpio.c
 
 # elf binary
-build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/exceptions.o build/cgu.o build/uart.o build/scu.o
+build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/exceptions.o build/cgu.o build/uart.o build/scu.o build/gpio.o
 
 #build/lwip.o build/libc.o
 
