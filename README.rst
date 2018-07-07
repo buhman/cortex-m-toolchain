@@ -44,7 +44,7 @@ The following boards are being used/tested with this repository:
 .. _lpcxpresso4367: https://www.nxp.com/part/OM13088
 
 These development boards require bootstrapping from DFU out of the box; this
-process is documented in bootstrappping_.
+process is documented in bootstrapping_.
 
 .. _bootstrapping: doc/lpcx-bootstrapping.rst
 
