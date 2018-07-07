@@ -15,3 +15,7 @@
 /* divisor helpers */
 #define DLLSB(v) ((v >> 0) & 0xff)
 #define DLMSB(v) ((v >> 8) & 0xff)
+
+/* fractional divisor helpers */
+#define DIVADDVAL(v) ((v & 0xf) << 0)
+#define MULVAL(v) ((v & 0xf) << 4)
