@@ -6,6 +6,7 @@
 #include "scu.h"
 #include "registers/gpio.h"
 #include "gpio.h"
+#include "timer.h"
 
 #include "board/lpcx_v3.h"
 
@@ -26,12 +27,14 @@ void main(void)
   /* use core clock | generate systick ISR | enable counter */
   *SYST_CSR = CLKSOURCE | TICKINT | ENABLE;
   /* trigger ISR once every tick_rvr cycles */
-  *SYST_RVR = 0x00FFFFFF;
+  //*SYST_RVR = 0x00FFFFFF;
 
   cgu_core_init();
   scu_board_init(lpcx_v3_board, LEN(lpcx_v3_board));
-  uart_generic_init(UART0);
+  //uart_generic_init(UART0);
   gpio_init();
+
+  timer_delay(TIMER1, 50);
 
   __enable_irq();
 
@@ -40,11 +43,18 @@ void main(void)
 
     GPIO->NOT[3] = (1 << 5);
 
-    UART0->THR = 'g';
+    //UART0->THR = 'g';
   }
 }
 
 void _systick(void)
 {
   return;
+}
+
+void _timer1(void)
+{
+  TIMER0->IR = 0;
+
+  GPIO->NOT[3] = (1 << 5);
 }

@@ -20,7 +20,7 @@ extern void _debugmonitor(void);
 extern void _pendsv(void);
 extern void _systick(void);
 
-/* cortex-m/lpc interrupt handlers */
+/* cortex-m interrupt handlers */
 const vec_t __vectors[] __SECTION(".vectors.core") = {
   &__stack_top,
   _start,
@@ -37,5 +37,5 @@ const vec_t __vectors[] __SECTION(".vectors.core") = {
   _debugmonitor,
   0,
   _pendsv,
-  _systick
+  _systick,
 };
