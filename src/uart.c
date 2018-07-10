@@ -44,3 +44,10 @@ uart_generic_init(struct uart *const uart)
   /* enable transmit */
   uart->TER |= TXEN;
 }
+
+void
+uart_enable_interrupt(struct uart *const uart)
+{
+  /* enable recieve data available interrupt */
+  uart->IER = RBRIE | RLSIE;
+}

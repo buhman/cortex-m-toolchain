@@ -12,6 +12,10 @@
 /* TEN */
 #define TXEN (1 << 0)
 
+/* IER */
+#define RBRIE (1 << 0)
+#define RLSIE (1 << 2)
+
 /* divisor helpers */
 #define DLLSB(v) ((v >> 0) & 0xff)
 #define DLMSB(v) ((v >> 8) & 0xff)

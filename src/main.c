@@ -1,5 +1,7 @@
 #include <stdint.h>
 #include <cmsis_gcc.h>
+#include <chip/irq.h>
+#include <core_cm4.h>
 
 #include "uart.h"
 #include "cgu.h"
@@ -24,27 +26,47 @@ volatile uint32_t * const SYST_CALIB = (uint32_t *)0xE000E01C;
 void main(void)
 {
   /* use core clock | generate systick ISR | enable counter */
-  *SYST_CSR = CLKSOURCE | TICKINT | ENABLE;
+  //*SYST_CSR = CLKSOURCE | TICKINT | ENABLE;
   /* trigger ISR once every tick_rvr cycles */
-  *SYST_RVR = 0x00FFFFFF;
+  //*SYST_RVR = 0x00FFFFFF;
 
   cgu_core_init();
   scu_board_init(lpcx_v3_board, LEN(lpcx_v3_board));
   uart_generic_init(UART0);
+  uart_enable_interrupt(UART0);
   gpio_init();
+
+  /* fixme: map uart to irqn */
+  NVIC_SetPriority(USART0_IRQn, 1);
+  NVIC_EnableIRQ(USART0_IRQn);
 
   __enable_irq();
 
+  UART0->THR = 'h';
+
   while (1) {
-    __WFI();
-
-    GPIO->NOT[3] = (1 << 5);
-
-    UART0->THR = 'g';
   }
 }
 
 void _systick(void)
 {
+  return;
+}
+
+void _uart0(void)
+{
+  uint32_t status0, status1;
+
+  if (UART0->LSR & (1 << 0)) {
+    UART0->THR = UART0->RBR & 0xff;
+    GPIO->NOT[3] = (1 << 5);
+  }
+
+  /* observe IIR/LSR */
+  status0 = UART0->IIR;
+  status1 = UART0->LSR;
+  (void)status0;
+  (void)status1;
+
   return;
 }
