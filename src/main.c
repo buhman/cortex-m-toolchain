@@ -8,6 +8,8 @@
 #include "scu.h"
 #include "registers/gpio.h"
 #include "gpio.h"
+#include "registers/timer.h"
+#include "timer.h"
 
 #include "board/lpcx_v3.h"
 
@@ -36,9 +38,14 @@ void main(void)
   uart_enable_interrupt(UART0);
   gpio_init();
 
+  timer_delay(TIMER0, 1000000);
+
   /* fixme: map uart to irqn */
   NVIC_SetPriority(USART0_IRQn, 1);
   NVIC_EnableIRQ(USART0_IRQn);
+
+  NVIC_SetPriority(TIMER0_IRQn, 1);
+  NVIC_EnableIRQ(TIMER0_IRQn);
 
   __enable_irq();
 
@@ -69,4 +76,11 @@ void _uart0(void)
   (void)status1;
 
   return;
+}
+
+void _timer0(void)
+{
+  TIMER0->IR = (1 << 0);
+
+  GPIO->NOT[3] = (1 << 7);
 }

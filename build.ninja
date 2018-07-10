@@ -30,9 +30,10 @@ build build/cgu.o: cc src/cgu.c
 build build/uart.o: cc src/uart.c
 build build/scu.o: cc src/scu.c
 build build/gpio.o: cc src/gpio.c
+build build/timer.o: cc src/timer.c
 
 # elf binary
-build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/exceptions.o build/cgu.o build/uart.o build/scu.o build/gpio.o build/default_handlers.o
+build kernel.elf: ld build/main.o build/start.o build/vector_table.o build/exceptions.o build/default_handlers.o build/cgu.o build/uart.o build/scu.o build/gpio.o build/timer.o
 
 #build/lwip.o build/libc.o
 
