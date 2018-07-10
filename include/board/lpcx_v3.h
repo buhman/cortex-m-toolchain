@@ -1,4 +1,5 @@
 #include "board/board.h"
+#include "bits/scu.h"
 
 #pragma once
 
@@ -10,9 +11,11 @@
   rxd: P2_1
   txd: P6_4
  */
-static const struct pin_cfg lpcx_v3_board[] = {
+
+static const struct pin_cfg lpcx_v3_board[] =
+{
   /* P2_1 function 1: U0_RXD */
-  {2, 1, 0x1},
+  {2, 1, (MODE_EPUN | MODE_EZI | MODE_EHS | MODE_FUNC1)},
   /* P6_4 function 2: U0_TXD */
-  {6, 4, 0x2},
+  {6, 4, (MODE_EPUN | MODE_FUNC2)},
 };
