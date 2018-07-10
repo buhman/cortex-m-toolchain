@@ -86,7 +86,7 @@ Here's an example of breaking at `main()`:
 
 I also suggest trying gdb-dashboard_.
 
-.. gdb-dashboard:: https://github.com/cyrus-and/gdb-dashboard
+.. _gdb-dashboard: https://github.com/cyrus-and/gdb-dashboard
 
 other
 ^^^^^
