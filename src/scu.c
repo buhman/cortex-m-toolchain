@@ -12,7 +12,7 @@ scu_board_init(const struct pin_cfg board[], uint32_t length)
     SCU->SFSP
       [board[index].port]
       [board[index].pin]
-      .w = board[index].function;
+      = board[index].function;
 
     index++;
   }

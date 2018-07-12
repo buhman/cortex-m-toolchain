@@ -2,23 +2,9 @@
 
 #pragma once
 
-union sfs {
-  struct {
-    volatile uint32_t
-      mode:3, /* pin function */
-      epd:1,  /* enable pull-down resistor at pad */
-      epun:1, /* disable pull-up resistor at pad*/
-      ehs:1,  /* slew rate */
-      ezi:1,  /* input buffer enable */
-      zif:1,  /* input glitch filter */
-      ehd:2;  /* drive strength */
-  } b;
-  volatile uint32_t w;
-};
-
 struct scu {
   /* port pin configuration registers */
-  volatile union sfs SFSP[16][32];
+  volatile uint32_t SFSP[16][32];
   volatile const uint32_t _pad_a[256];
   /* CLK pin configuration registers */
   volatile uint32_t SFSCLK[4];
