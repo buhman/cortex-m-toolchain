@@ -5,7 +5,7 @@ void __default_handler(void);
 
 void _dac(void) __WEAK_ALIAS(__default_handler);
 void _m0app(void) __WEAK_ALIAS(__default_handler);
-void _dma(void) __WEAK_ALIAS(__default_handler);
+void _gpdma(void) __WEAK_ALIAS(__default_handler);
 void _flash_eeprom(void) __WEAK_ALIAS(__default_handler);
 void _ethernet(void) __WEAK_ALIAS(__default_handler);
 void _sdio(void) __WEAK_ALIAS(__default_handler);

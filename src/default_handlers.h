@@ -3,7 +3,7 @@
 /* forward declarations */
 void _dac(void);
 void _m0app(void);
-void _dma(void);
+void _gpdma(void);
 void _flash_eeprom(void);
 void _ethernet(void);
 void _sdio(void);
