@@ -13,7 +13,8 @@ void _debugmonitor(void) __WEAK_ALIAS(__default);
 void _pendsv(void) __WEAK_ALIAS(__default);
 void _systick(void) __WEAK_ALIAS(__default);
 
-void __default(void)
+void
+__default(void)
 {
   while (1);
 }

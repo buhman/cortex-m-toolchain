@@ -8,7 +8,7 @@ struct channel {
   /* source address */
   volatile uint32_t SRCADDR;
   /* destination address */
-  volatile uint32_t DESTADDR;
+  volatile uint32_t DSTADDR;
   /* linked list item */
   volatile uint32_t LLI;
   /* control */
@@ -24,7 +24,7 @@ struct gpdma {
   /* interrupt terminal count request status */
   volatile const uint32_t INTTCSTAT;
   /* interrupt terminal count request clear */
-  volatile uint32_t INTTCCLEAR;
+  volatile uint32_t INTTCCLR;
   /* interrupt error status */
   volatile const uint32_t INTERRSTAT;
   /* interrupt error clear */

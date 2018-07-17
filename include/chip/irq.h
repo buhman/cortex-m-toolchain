@@ -16,7 +16,7 @@ typedef enum {
   /* lpc */
   DAC_IRQn =  0,
   M0APP_IRQn =  1,
-  DMA_IRQn =  2,
+  GPDMA_IRQn =  2,
   RESERVED1_IRQn =  3,
   RESERVED2_IRQn =  4,
   ETHERNET_IRQn =  5,

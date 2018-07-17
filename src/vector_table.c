@@ -35,7 +35,7 @@ const vec_t __vectors[] __SECTION(".vectors.core") = {
 const vec_t __chip_vectors[] __SECTION(".vectors.chip") = {
   _dac,
   _m0app,
-  _dma,
+  _gpdma,
   0,
   _flash_eeprom,
   _ethernet,
